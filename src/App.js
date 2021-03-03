@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import axios from 'axios'
+import './App.css'
+import Button from '@material-ui/core/Button';
+import styled from 'styled-components'
+const HeroContainer = styled.div`
+    background: linear-gradient( to right, rgba(0,0,0,0.7), rgba(0,0,0,0.1)),url('/images/egypt2.jpg');
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+    width:100vw;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+`;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends Component {
+  constructor () {
+    super()
+    
+    this.state = {
+      sentence:''
+    }
+  }
+  componentDidMount () {
+    this.fetchData()
+  }
+
+  fetchData = () => {
+    axios.get('https://api.adviceslip.com/advice')
+      .then(res => this.setState({sentence: res.data.slip.advice}))
+      .catch(err => console.log(err))
+  }
+
+  render() {
+    return (
+      <HeroContainer>
+      <div className='advice'>
+        <div className="advice2">
+          <h3 id='h3'>{this.state.sentence}</h3>
+        </div>
+        <Button onClick={this.fetchData} variant="contained" color="secondary" >
+          Get Advice!
+        </Button>
+      </div>
+      </HeroContainer>
+    )
+  }
 }
-
-export default App;
