@@ -10,6 +10,7 @@ const HeroContainer = styled.div`
     background-size: cover;
     width:100vw;
     display:flex;
+    flex-direction:column;
     justify-content:center;
     align-items:center;
     overflow:hidden;
@@ -45,6 +46,9 @@ export default class App extends Component {
           Get Advice!
         </Button>
       </div>
+      <a href="https://github.com/Alireza9651501005" target='_blank' rel="noreferrer">
+        <i class='fab fa-github'></i>
+      </a>
       </HeroContainer>
     )
   }
