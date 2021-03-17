@@ -3,9 +3,9 @@
   "name": "Famous sentences App PWA",
   "icons": [
       {
-          "src": "kir.png",
+          "src": "work.png",
           "type": "image/png",
-          "sizes": "200x200"
+          "sizes": "400x400"
       }
   ],
   "start_url": ".",
