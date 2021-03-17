@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 import Button from '@material-ui/core/Button';
@@ -17,32 +17,27 @@ const HeroContainer = styled.div`
 `;
 
 
-export default class App extends Component {
-  constructor () {
-    super()
-    
-    this.state = {
-      sentence:''
+export default function App() {
+  const [talk, settalk] = useState('');
+  useEffect(() => { 
+    const idd = setInterval (fetchData(),3000)
+    return () => {
+      clearInterval(idd)
     }
-  }
-  componentDidMount () {
-    this.fetchData()
-  }
+  },[talk])
 
-  fetchData = () => {
+  const fetchData = () => {
     axios.get('https://api.adviceslip.com/advice')
-      .then(res => this.setState({sentence: res.data.slip.advice}))
+      .then(res => settalk(prev => prev = res.data.slip.advice))
       .catch(err => console.log(err))
   }
-
-  render() {
     return (
       <HeroContainer>
       <div className='advice'>
         <div className="advice2">
-          <h3 id='h3'>{this.state.sentence}</h3>
+          <h3 id='h3'>{talk}</h3>
         </div>
-        <Button onClick={this.fetchData} variant="contained" color="secondary" >
+        <Button onClick={fetchData} variant="contained" color="secondary" >
           Get Advice!
         </Button>
       </div>
@@ -51,5 +46,4 @@ export default class App extends Component {
       </a>
       </HeroContainer>
     )
-  }
 }
